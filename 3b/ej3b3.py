@@ -60,7 +60,7 @@ class DecoratorFactoryLogs:
         """
 
         def decorator(func: Callable) -> Callable:
-            @wraps
+            @wraps(func)
             def wrapper(*args: Any, **kwargs: Any) -> Any:
                 logging.info(
                     f"{message} Starting: {func.__name__} with args: {args}, kwargs: {kwargs}"
@@ -83,7 +83,7 @@ class DecoratorFactoryLogs:
             def wrapper(*args: Any, **kwargs: Any) -> Any:
                 args_repr = [repr(a) for a in args]
                 kwargs_repr = [f"{k}={v!r}" for k, v in kwargs.items()]
-                signature =
+                signature =", ".join(args_repr + kwargs_repr)
                 logging.debug(f"{message} Executing: {func.__name__}({signature})")
                 return 
 
@@ -101,7 +101,7 @@ class DecoratorFactoryLogs:
         """
 
         def decorator(func: Callable) -> Callable:
-            @wraps
+            @wraps(func)
             def wrapper(*args: Any, **kwargs: Any) -> Any:
                 custom_logger = logging.getLogger(func.__name__)
                 handler = logging.FileHandler(filepath)
@@ -114,7 +114,7 @@ class DecoratorFactoryLogs:
                 custom_logger.info(
                     f"{message} Executing: {func.__name__} with args: {args}, kwargs: {kwargs}"
                 )
-                result = 
+                result = func(*args, **kwargs)
                 custom_logger.removeHandler(handler)  # Clean up handler
                 return result
 
