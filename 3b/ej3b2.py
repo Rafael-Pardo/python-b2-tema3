@@ -42,7 +42,7 @@ PRINT_LOGS: bool = True
 
 class LogMethodCalls(object):
     def __init__(self, print_logs: bool = True) -> None:
-        self.print_logs: bool = 
+        self.print_logs: bool = print_logs
 
     def __call__(self, func: Callable) -> Callable:
         def wrapped(*args: Any, **kwargs: Any) -> Any:
